@@ -39,6 +39,14 @@ class CourseControllerTest {
                 .andExpect(jsonPath("$.name", is("Java OO")))
                 .andExpect(jsonPath("$.shortDescription", is("Java and O...")));
     }
+    
+    @Test
+    void not_found_when_course_does_not_exist() throws Exception {
+
+        mockMvc.perform(get("/courses/java-1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 
     @Test
     void should_retrieve_all_courses() throws Exception {
@@ -67,6 +75,97 @@ class CourseControllerTest {
                 .content(jsonMapper.writeValueAsString(newCourseRequest)))
                 .andExpect(status().isCreated())
                 .andExpect(header().string("Location", "/courses/java-2"));
+    }
+    
+    @Test
+    void should_not_allow_duplication_of_code() throws Exception {
+        NewCourseRequest newCourseRequest = new NewCourseRequest("java-2", "Java Collections", "Java Collections: Lists, Sets, Maps and more.");
+        NewCourseRequest newCourseRequest2 = new NewCourseRequest("java-2", "Java", "Java Collections: Lists, Sets, Maps and more.");
+
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest)));
+        
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest2)))
+        		.andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void should_not_allow_duplication_of_name() throws Exception {
+        NewCourseRequest newCourseRequest = new NewCourseRequest("java-2", "Java Collections", "Java Collections: Lists, Sets, Maps and more.");
+        NewCourseRequest newCourseRequest2 = new NewCourseRequest("spring-1", "Java Collections", "Java Collections: Lists, Sets, Maps and more.");
+
+        
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest)));
+        
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest2)))
+        		.andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void should_not_add_new_course_when_code_empty() throws Exception {
+        NewCourseRequest newCourseRequest = new NewCourseRequest("", "Java Collections", "Java Collections: Lists, Sets, Maps and more.");
+
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest)))
+        		.andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void should_not_add_new_course_when_name_empty() throws Exception {
+        NewCourseRequest newCourseRequest = new NewCourseRequest("java-2", "", "Java Collections: Lists, Sets, Maps and more.");
+
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest)))
+        		.andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void should_not_add_new_course_when_code_null() throws Exception {
+        NewCourseRequest newCourseRequest = new NewCourseRequest(null, "Java Collections", "Java Collections: Lists, Sets, Maps and more.");
+
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest)))
+                .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void should_not_add_new_course_when_name_null() throws Exception {
+        NewCourseRequest newCourseRequest = new NewCourseRequest("java-2", null, "Java Collections: Lists, Sets, Maps and more.");
+
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest)))
+                .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void should_not_add_new_course_when_code_size_exceeded() throws Exception {
+        NewCourseRequest newCourseRequest = new NewCourseRequest("java-222222", "Java Collections", "Java Collections: Lists, Sets, Maps and more.");
+
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest)))
+        		.andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void should_not_add_new_course_when_name_size_exceeded() throws Exception {
+        NewCourseRequest newCourseRequest = new NewCourseRequest("java-2", "Java Collectionssssss", "Java Collections: Lists, Sets, Maps and more.");
+
+        mockMvc.perform(post("/courses")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonMapper.writeValueAsString(newCourseRequest)))
+        		.andExpect(status().isBadRequest());
     }
 
 }

@@ -1,6 +1,6 @@
 package br.com.alura.school.matricula;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -30,7 +30,7 @@ public class Matricula {
 	private User user;
 	
     @Column(name = "data_matricula")
-    private LocalDateTime dataMatricula;
+    private LocalDate dataMatricula;
 
 	@Deprecated
 	protected Matricula() { }
@@ -38,7 +38,7 @@ public class Matricula {
 	public Matricula(Course course, User user) {
 		this.course = course;
 		this.user = user;
-		this.dataMatricula = LocalDateTime.now();
+		this.dataMatricula = LocalDate.now();
 	}
     
 	public Course getCourse() {
@@ -49,7 +49,7 @@ public class Matricula {
 		return user;
 	}
 
-	public LocalDateTime getDataMatricula() {
+	public LocalDate getDataMatricula() {
 		return dataMatricula;
 	}	
 }

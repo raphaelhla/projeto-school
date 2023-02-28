@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import br.com.alura.school.course.Course;
 import br.com.alura.school.user.User;
 
-public interface MatriculaRepository extends JpaRepository<Matricula, Long> {
+interface MatriculaRepository extends JpaRepository<Matricula, Long> {
 
 	boolean existsByCourseAndUser(Course course, User user);
 	

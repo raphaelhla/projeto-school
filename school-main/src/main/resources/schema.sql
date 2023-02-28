@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS Matricula;
 DROP TABLE IF EXISTS User;
 
 CREATE TABLE User (
@@ -15,13 +16,11 @@ CREATE TABLE Course (
     description VARCHAR(500)
 );
 
-DROP TABLE IF EXISTS Matricula;
-
 CREATE TABLE Matricula (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_username VARCHAR(20) NOT NULL,
     course_code VARCHAR(10) NOT NULL,
-    data_matricula TIMESTAMP NOT NULL,
+    data_matricula DATE NOT NULL,
     FOREIGN KEY (user_username) REFERENCES User(username),
     FOREIGN KEY (course_code) REFERENCES Course(code)
 );
