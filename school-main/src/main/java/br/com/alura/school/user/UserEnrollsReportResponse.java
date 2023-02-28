@@ -2,25 +2,16 @@ package br.com.alura.school.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserEnrollsReportResponse implements Comparable<UserEnrollsReportResponse>{
+public class UserEnrollsReportResponse {
 
     @JsonProperty
     private final String email;
     
     @JsonProperty("quantidade_matriculas")
-    private final int quantidadeMatriculas;
-
-    public UserEnrollsReportResponse(User user) {
-        this.email = user.getEmail();
-        this.quantidadeMatriculas = user.getQuantidadeMatriculas();
-    }
+    private final Long quantidadeMatriculas;
     
-	public int getQuantidadeMatriculas() {
-		return quantidadeMatriculas;
-	}
-
-	@Override
-	public int compareTo(UserEnrollsReportResponse o) {
-		return this.quantidadeMatriculas - o.getQuantidadeMatriculas();
+    public UserEnrollsReportResponse(String email, Long quantidadeMatriculas) {
+		this.email = email;
+		this.quantidadeMatriculas = quantidadeMatriculas;
 	}
 }

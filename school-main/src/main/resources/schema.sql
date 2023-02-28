@@ -18,9 +18,9 @@ CREATE TABLE Course (
 
 CREATE TABLE Matricula (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_username VARCHAR(20) NOT NULL,
-    course_code VARCHAR(10) NOT NULL,
+    user_id BIGINT NOT NULL,
+    course_id BIGINT NOT NULL,
     data_matricula DATE NOT NULL,
-    FOREIGN KEY (user_username) REFERENCES User(username),
-    FOREIGN KEY (course_code) REFERENCES Course(code)
+    FOREIGN KEY (user_id) REFERENCES User(id),
+    FOREIGN KEY (course_id) REFERENCES Course(id)
 );

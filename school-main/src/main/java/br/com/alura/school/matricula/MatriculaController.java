@@ -1,13 +1,10 @@
 package br.com.alura.school.matricula;
 
 import static java.lang.String.format;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -58,20 +55,13 @@ class MatriculaController {
 	@GetMapping("/courses/enroll/report")
 	ResponseEntity<List<UserEnrollsReportResponse>> getRelatorioMatriculas() {
 		
-		Set<User> usersMatriculados = matriculaRepository.findUsersMatriculados();
+		List<UserEnrollsReportResponse> usersMatriculados = matriculaRepository.findUsersEnrolled();
 		
 		if (usersMatriculados.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
 		
-		List<UserEnrollsReportResponse> response = usersMatriculados
-				.stream()
-				.map(user -> new UserEnrollsReportResponse(user))
-				.collect(Collectors.toList());
-		
-		Collections.sort(response); // Ordena pela quantidade de matricula.
-		
-		return ResponseEntity.ok(response);
+		return ResponseEntity.ok(usersMatriculados);
 	}
 	
 }

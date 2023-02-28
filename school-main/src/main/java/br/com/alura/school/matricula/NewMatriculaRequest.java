@@ -5,18 +5,18 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class NewMatriculaRequest {
+class NewMatriculaRequest {
     
     @Size(max=20)
     @NotBlank
     @JsonProperty
 	private String username;
 
-    public String getUsername() {
+    String getUsername() {
         return username;
     }
 
-	public void setUsername(String username) {
+	void setUsername(String username) {
 		this.username = username;
 	}
 }

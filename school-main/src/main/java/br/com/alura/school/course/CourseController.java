@@ -24,10 +24,7 @@ class CourseController {
     @GetMapping("/courses")
     ResponseEntity<List<CourseResponse>> allCourses() {
     	List<Course> courses = courseRepository.findAll();
-    	List<CourseResponse> coursesResponse = courses
-    			.stream()
-				.map(c -> new CourseResponse(c))
-				.collect(Collectors.toList());
+    	List<CourseResponse> coursesResponse = courses.stream().map(c -> new CourseResponse(c)).collect(Collectors.toList());
         return ResponseEntity.ok(coursesResponse);
     }
 

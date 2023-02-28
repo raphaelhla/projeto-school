@@ -23,13 +23,13 @@ class NewCourseRequest {
     @JsonProperty
     private final String description;
 
-    public NewCourseRequest(String code, String name, String description) {
+    NewCourseRequest(String code, String name, String description) {
         this.code = code;
         this.name = name;
         this.description = description;
     }
 
-    public String getCode() {
+    String getCode() {
         return code;
     }
 

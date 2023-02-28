@@ -215,11 +215,11 @@ public class MatriculaControllerTest {
 				.andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()", is(3)))
-                .andExpect(jsonPath("$[0].email", is("alex@email.com")))
-                .andExpect(jsonPath("$[0].quantidade_matriculas", is(1)))
+                .andExpect(jsonPath("$[0].email", is("ana@email.com")))
+                .andExpect(jsonPath("$[0].quantidade_matriculas", is(3)))
                 .andExpect(jsonPath("$[1].email", is("raphael@email.com")))
                 .andExpect(jsonPath("$[1].quantidade_matriculas", is(2)))
-                .andExpect(jsonPath("$[2].email", is("ana@email.com")))
-                .andExpect(jsonPath("$[2].quantidade_matriculas", is(3)));
+                .andExpect(jsonPath("$[2].email", is("alex@email.com")))
+                .andExpect(jsonPath("$[2].quantidade_matriculas", is(1)));
     }
 }

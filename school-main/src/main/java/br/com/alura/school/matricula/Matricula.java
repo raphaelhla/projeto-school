@@ -2,9 +2,9 @@ package br.com.alura.school.matricula;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,15 +21,15 @@ public class Matricula {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "course_code", referencedColumnName = "code")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "course_id")
 	private Course course;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "user_username", referencedColumnName = "username")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
 	private User user;
 	
-    @Column(name = "data_matricula")
+    @Column(nullable = false)
     private LocalDate dataMatricula;
 
 	@Deprecated
