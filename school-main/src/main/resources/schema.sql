@@ -14,3 +14,14 @@ CREATE TABLE Course (
     name VARCHAR(20) NOT NULL UNIQUE,
     description VARCHAR(500)
 );
+
+DROP TABLE IF EXISTS Matricula;
+
+CREATE TABLE Matricula (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_username VARCHAR(20) NOT NULL,
+    course_code VARCHAR(10) NOT NULL,
+    data_matricula TIMESTAMP NOT NULL,
+    FOREIGN KEY (user_username) REFERENCES User(username),
+    FOREIGN KEY (course_code) REFERENCES Course(code)
+);

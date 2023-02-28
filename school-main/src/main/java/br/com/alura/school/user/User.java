@@ -1,5 +1,9 @@
 package br.com.alura.school.user;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,12 +12,12 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 @Entity
-class User {
+public class User implements Serializable{
 
-    @Id
+    private static final long serialVersionUID = 1L;
+
+	@Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
@@ -30,17 +34,16 @@ class User {
     @Deprecated
     protected User() {}
 
-    User(String username, String email) {
+    public User(String username, String email) {
         this.username = username;
         this.email = email;
     }
 
-    String getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
-
 }
