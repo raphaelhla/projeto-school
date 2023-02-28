@@ -2,8 +2,6 @@ package br.com.alura.school.course;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,9 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Course implements Serializable{
-
-    private static final long serialVersionUID = 1L;
+public class Course {
 
 	@Id
     @GeneratedValue(strategy = IDENTITY)
