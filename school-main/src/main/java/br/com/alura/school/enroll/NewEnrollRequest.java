@@ -1,11 +1,11 @@
-package br.com.alura.school.matricula;
+package br.com.alura.school.enroll;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-class NewMatriculaRequest {
+class NewEnrollRequest {
     
     @Size(max=20)
     @NotBlank

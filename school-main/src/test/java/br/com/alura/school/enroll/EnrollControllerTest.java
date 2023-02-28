@@ -1,4 +1,4 @@
-package br.com.alura.school.matricula;
+package br.com.alura.school.enroll;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -25,7 +25,7 @@ import br.com.alura.school.user.UserRepository;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Sql(scripts = "classpath:schema.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class MatriculaControllerTest {
+public class EnrollControllerTest {
 
     private final ObjectMapper jsonMapper = new ObjectMapper();
 
@@ -46,12 +46,12 @@ public class MatriculaControllerTest {
         courseRepository.save(new Course("java-1", "Java OO", "Java and Object Orientation: Encapsulation, Inheritance and Polymorphism."));
         userRepository.save(new User("ana", "ana@email.com"));
 
-        NewMatriculaRequest newMatriculaRequest = new NewMatriculaRequest();
-        newMatriculaRequest.setUsername("ana");
+        NewEnrollRequest newEnrollRequest = new NewEnrollRequest();
+        newEnrollRequest.setUsername("ana");
         
         mockMvc.perform(post("/courses/java-1/enroll")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonMapper.writeValueAsString(newMatriculaRequest)))
+                .content(jsonMapper.writeValueAsString(newEnrollRequest)))
                 .andExpect(status().isCreated());
     }
     
@@ -60,16 +60,16 @@ public class MatriculaControllerTest {
         courseRepository.save(new Course("java-1", "Java OO", "Java and Object Orientation: Encapsulation, Inheritance and Polymorphism."));
         userRepository.save(new User("ana", "ana@email.com"));
 
-        NewMatriculaRequest newMatriculaRequest = new NewMatriculaRequest();
-        newMatriculaRequest.setUsername("ana");
+        NewEnrollRequest newEnrollRequest = new NewEnrollRequest();
+        newEnrollRequest.setUsername("ana");
         
         mockMvc.perform(post("/courses/java-1/enroll")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonMapper.writeValueAsString(newMatriculaRequest)));
+                .content(jsonMapper.writeValueAsString(newEnrollRequest)));
         
         mockMvc.perform(post("/courses/java-1/enroll")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonMapper.writeValueAsString(newMatriculaRequest)))
+                .content(jsonMapper.writeValueAsString(newEnrollRequest)))
                 .andExpect(status().isBadRequest());
     }
     
@@ -77,12 +77,12 @@ public class MatriculaControllerTest {
     void should_not_enroll_user_in_course_when_user_nonexistent() throws Exception {
         courseRepository.save(new Course("java-1", "Java OO", "Java and Object Orientation: Encapsulation, Inheritance and Polymorphism."));
 
-        NewMatriculaRequest newMatriculaRequest = new NewMatriculaRequest();
-        newMatriculaRequest.setUsername("anaaaaaa");
+        NewEnrollRequest newEnrollRequest = new NewEnrollRequest();
+        newEnrollRequest.setUsername("anaaaaaa");
         
         mockMvc.perform(post("/courses/java-1/enroll")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonMapper.writeValueAsString(newMatriculaRequest)))
+                .content(jsonMapper.writeValueAsString(newEnrollRequest)))
         		.andExpect(status().isNotFound());
     }
     
@@ -90,12 +90,12 @@ public class MatriculaControllerTest {
     void should_not_enroll_user_in_course_when_course_nonexistent() throws Exception {
         userRepository.save(new User("ana", "ana@email.com"));
 
-        NewMatriculaRequest newMatriculaRequest = new NewMatriculaRequest();
-        newMatriculaRequest.setUsername("ana");
+        NewEnrollRequest newEnrollRequest = new NewEnrollRequest();
+        newEnrollRequest.setUsername("ana");
         
         mockMvc.perform(post("/courses/javaaaaaaaa/enroll")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonMapper.writeValueAsString(newMatriculaRequest)))
+                .content(jsonMapper.writeValueAsString(newEnrollRequest)))
         		.andExpect(status().isNotFound());
     }
     
@@ -104,12 +104,12 @@ public class MatriculaControllerTest {
         courseRepository.save(new Course("java-1", "Java OO", "Java and Object Orientation: Encapsulation, Inheritance and Polymorphism."));
         userRepository.save(new User("ana", "ana@email.com"));
         
-        NewMatriculaRequest newMatriculaRequest = new NewMatriculaRequest();
-        newMatriculaRequest.setUsername(null);
+        NewEnrollRequest newEnrollRequest = new NewEnrollRequest();
+        newEnrollRequest.setUsername(null);
         
         mockMvc.perform(post("/courses/java-1/enroll")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonMapper.writeValueAsString(newMatriculaRequest)))
+                .content(jsonMapper.writeValueAsString(newEnrollRequest)))
         		.andExpect(status().isBadRequest());
     }
     
@@ -118,12 +118,12 @@ public class MatriculaControllerTest {
         courseRepository.save(new Course("java-1", "Java OO", "Java and Object Orientation: Encapsulation, Inheritance and Polymorphism."));
         userRepository.save(new User("ana", "ana@email.com"));
         
-        NewMatriculaRequest newMatriculaRequest = new NewMatriculaRequest();
-        newMatriculaRequest.setUsername("");
+        NewEnrollRequest newEnrollRequest = new NewEnrollRequest();
+        newEnrollRequest.setUsername("");
         
         mockMvc.perform(post("/courses/java-1/enroll")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(jsonMapper.writeValueAsString(newMatriculaRequest)))
+                .content(jsonMapper.writeValueAsString(newEnrollRequest)))
         		.andExpect(status().isBadRequest());
     }
     
@@ -146,12 +146,12 @@ public class MatriculaControllerTest {
         courseRepository.save(new Course("java-1", "Java OO", "Java and Object Orientation: Encapsulation, Inheritance and Polymorphism."));
         userRepository.save(new User("ana", "ana@email.com"));
 
-        NewMatriculaRequest newMatriculaRequest = new NewMatriculaRequest();
-        newMatriculaRequest.setUsername("ana");
+        NewEnrollRequest newEnrollRequest = new NewEnrollRequest();
+        newEnrollRequest.setUsername("ana");
 
         mockMvc.perform(post("/courses/java-1/enroll")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonMapper.writeValueAsString(newMatriculaRequest)));
+                        .content(jsonMapper.writeValueAsString(newEnrollRequest)));
 
         mockMvc.perform(get("/courses/enroll/report")
                         .accept(MediaType.APPLICATION_JSON))
@@ -172,41 +172,41 @@ public class MatriculaControllerTest {
         userRepository.save(new User("alex", "alex@email.com"));
         userRepository.save(new User("raphael", "raphael@email.com"));
 
-        NewMatriculaRequest newMatriculaRequest1 = new NewMatriculaRequest();
-        newMatriculaRequest1.setUsername("ana");
+        NewEnrollRequest newEnrollRequest1 = new NewEnrollRequest();
+        newEnrollRequest1.setUsername("ana");
 
         // Matriculando ana em 3 cursos
         mockMvc.perform(post("/courses/java-1/enroll")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonMapper.writeValueAsString(newMatriculaRequest1)));
+                        .content(jsonMapper.writeValueAsString(newEnrollRequest1)));
         mockMvc.perform(post("/courses/spring-1/enroll")
         				.contentType(MediaType.APPLICATION_JSON)
-        				.content(jsonMapper.writeValueAsString(newMatriculaRequest1)));
+        				.content(jsonMapper.writeValueAsString(newEnrollRequest1)));
         mockMvc.perform(post("/courses/spring-2/enroll")
 		                .contentType(MediaType.APPLICATION_JSON)
-		                .content(jsonMapper.writeValueAsString(newMatriculaRequest1)));
+		                .content(jsonMapper.writeValueAsString(newEnrollRequest1)));
         
         
-        NewMatriculaRequest newMatriculaRequest2 = new NewMatriculaRequest();
-        newMatriculaRequest2.setUsername("alex");
+        NewEnrollRequest newEnrollRequest2 = new NewEnrollRequest();
+        newEnrollRequest2.setUsername("alex");
 
         // Matriculando alex em 1 curso
         mockMvc.perform(post("/courses/spring-2/enroll")
 		                .contentType(MediaType.APPLICATION_JSON)
-		                .content(jsonMapper.writeValueAsString(newMatriculaRequest2)));
+		                .content(jsonMapper.writeValueAsString(newEnrollRequest2)));
         
         
         
-        NewMatriculaRequest newMatriculaRequest3 = new NewMatriculaRequest();
-        newMatriculaRequest3.setUsername("raphael");
+        NewEnrollRequest newEnrollRequest3 = new NewEnrollRequest();
+        newEnrollRequest3.setUsername("raphael");
         
         // Matriculando raphael em 2 cursos
         mockMvc.perform(post("/courses/spring-1/enroll")
 		                .contentType(MediaType.APPLICATION_JSON)
-		                .content(jsonMapper.writeValueAsString(newMatriculaRequest3)));
+		                .content(jsonMapper.writeValueAsString(newEnrollRequest3)));
         mockMvc.perform(post("/courses/spring-2/enroll")
 		                .contentType(MediaType.APPLICATION_JSON)
-		                .content(jsonMapper.writeValueAsString(newMatriculaRequest3)));
+		                .content(jsonMapper.writeValueAsString(newEnrollRequest3)));
 
         
         

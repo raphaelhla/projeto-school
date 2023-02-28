@@ -1,4 +1,4 @@
-package br.com.alura.school.matricula;
+package br.com.alura.school.enroll;
 
 import java.time.LocalDate;
 
@@ -15,7 +15,7 @@ import br.com.alura.school.course.Course;
 import br.com.alura.school.user.User;
 
 @Entity
-public class Matricula {
+class Enroll {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,26 +30,26 @@ public class Matricula {
 	private User user;
 	
     @Column(nullable = false)
-    private LocalDate dataMatricula;
+    private LocalDate enrollDate;
 
 	@Deprecated
-	protected Matricula() { }
+	protected Enroll() { }
 
-	public Matricula(Course course, User user) {
+	Enroll(Course course, User user) {
 		this.course = course;
 		this.user = user;
-		this.dataMatricula = LocalDate.now();
+		this.enrollDate = LocalDate.now();
 	}
     
-	public Course getCourse() {
+	Course getCourse() {
 		return course;
 	}
 
-	public User getUser() {
+	User getUser() {
 		return user;
 	}
 
-	public LocalDate getDataMatricula() {
-		return dataMatricula;
+	LocalDate getEnrollDate() {
+		return enrollDate;
 	}	
 }

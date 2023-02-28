@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS Matricula;
+DROP TABLE IF EXISTS Enroll;
 DROP TABLE IF EXISTS User;
 
 CREATE TABLE User (
@@ -16,11 +16,11 @@ CREATE TABLE Course (
     description VARCHAR(500)
 );
 
-CREATE TABLE Matricula (
+CREATE TABLE Enroll (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     course_id BIGINT NOT NULL,
-    data_matricula DATE NOT NULL,
+    enroll_date DATE NOT NULL,
     FOREIGN KEY (user_id) REFERENCES User(id),
     FOREIGN KEY (course_id) REFERENCES Course(id)
 );
